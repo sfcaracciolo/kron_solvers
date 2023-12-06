@@ -1,0 +1,11 @@
+Scripts/
+Include/
+Lib/
+share/
+__pycache__
+.python-version
+pyvenv.cfg
+build/
+*.pyd 
+*.html
+*.egg-info

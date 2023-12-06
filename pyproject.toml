@@ -1,0 +1,27 @@
+[build-system]
+requires = [
+    "setuptools", 
+    "wheel", 
+    "Cython", 
+    "scipy"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kron_solvers"
+version = "0.0.1"
+authors = [
+  { name="Santiago Federico Caracciolo", email="santiago.caracciolo@gmail.com" },
+]
+description = "Method to solve a linear regression problem subject to group LASSO and ridge penalisation when the model has a Kronecker structure."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "kron_groupper @ git+https://github.com/sfcaracciolo/kron_groupper.git"
+  "regularization_tools @ git+https://github.com/sfcaracciolo/regularization_tools.git"
+]
