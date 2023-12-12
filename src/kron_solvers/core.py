@@ -260,7 +260,7 @@ def _kbcd(
         # stopping criteria
         dx[:] = x1
         dx -= x0
-        if np.linalg.norm(dx) < np.linalg.norm(x0) * ext_tol:
+        if np.linalg.norm(dx) <= np.linalg.norm(x0) * ext_tol:
             break
 
         # updates

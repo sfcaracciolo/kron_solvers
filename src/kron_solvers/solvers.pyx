@@ -121,7 +121,7 @@ cpdef int apg(
         daxpy(&q, &CONST_DOUBLE_m1, &x0[0], &CONST_INT_1, &dx[0], &CONST_INT_1)
         # if np.linalg.norm(dx)/t < tol: # norm of generalized gradient
             # break
-        if dnrm2(&q, &dx[0], &CONST_INT_1) < dnrm2(&q, &x0[0], &CONST_INT_1) * tol:
+        if dnrm2(&q, &dx[0], &CONST_INT_1) <= dnrm2(&q, &x0[0], &CONST_INT_1) * tol:
             break
         # printf('%f\n', dnrm2(&q, &dx[0], &CONST_INT_1))
 
@@ -266,7 +266,7 @@ cpdef int bcd(
         daxpy(&qk, &CONST_DOUBLE_m1, &x0[0], &CONST_INT_1, &dx[0], &CONST_INT_1)
         # _amax = idamax(&N, &dr[0], &CONST_INT_1)-1 # BLAS is one-based index
 
-        if dnrm2(&qk, &dx[0], &CONST_INT_1) < dnrm2(&qk, &x0[0], &CONST_INT_1) * ext_tol:
+        if dnrm2(&qk, &dx[0], &CONST_INT_1) <= dnrm2(&qk, &x0[0], &CONST_INT_1) * ext_tol:
             break
 
         # if fabs(dr[_amax]) < ext_tol:

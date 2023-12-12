@@ -2886,7 +2886,6 @@ static void (*__pyx_f_5scipy_6linalg_11cython_blas_dgemv)(char *, int *, int *, 
 static void (*__pyx_f_5scipy_6linalg_11cython_blas_dger)(int *, int *, __pyx_t_5scipy_6linalg_11cython_blas_d *, __pyx_t_5scipy_6linalg_11cython_blas_d *, int *, __pyx_t_5scipy_6linalg_11cython_blas_d *, int *, __pyx_t_5scipy_6linalg_11cython_blas_d *, int *); /*proto*/
 static __pyx_t_5scipy_6linalg_11cython_blas_d (*__pyx_f_5scipy_6linalg_11cython_blas_dnrm2)(int *, __pyx_t_5scipy_6linalg_11cython_blas_d *, int *); /*proto*/
 static void (*__pyx_f_5scipy_6linalg_11cython_blas_dscal)(int *, __pyx_t_5scipy_6linalg_11cython_blas_d *, __pyx_t_5scipy_6linalg_11cython_blas_d *, int *); /*proto*/
-static int (*__pyx_f_5scipy_6linalg_11cython_blas_idamax)(int *, __pyx_t_5scipy_6linalg_11cython_blas_d *, int *); /*proto*/
 
 /* Module declarations from "cython.view" */
 
@@ -17847,10 +17846,10 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
   int __pyx_v_k;
   int __pyx_v_max_iter_1;
   int __pyx_v_CONST_INT_1;
-  double __pyx_v_CONST_FLOAT_1;
-  double __pyx_v_CONST_FLOAT_m1;
-  double __pyx_v_CONST_FLOAT_0;
-  double __pyx_v_CONST_FLOAT_3;
+  double __pyx_v_CONST_DOUBLE_1;
+  double __pyx_v_CONST_DOUBLE_m1;
+  double __pyx_v_CONST_DOUBLE_0;
+  double __pyx_v_CONST_DOUBLE_3;
   int __pyx_v_N;
   double __pyx_v_neg_t;
   double __pyx_v_s;
@@ -17902,7 +17901,7 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
  *     cdef int k
  *     cdef int max_iter_1 = max_iter + 1             # <<<<<<<<<<<<<<
  *     cdef int CONST_INT_1 = 1
- *     cdef double CONST_FLOAT_1 = 1.
+ *     cdef double CONST_DOUBLE_1 = 1.
  */
   __pyx_v_max_iter_1 = (__pyx_v_max_iter + 1);
 
@@ -17910,50 +17909,50 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
  *     cdef int k
  *     cdef int max_iter_1 = max_iter + 1
  *     cdef int CONST_INT_1 = 1             # <<<<<<<<<<<<<<
- *     cdef double CONST_FLOAT_1 = 1.
- *     cdef double CONST_FLOAT_m1 = -1.
+ *     cdef double CONST_DOUBLE_1 = 1.
+ *     cdef double CONST_DOUBLE_m1 = -1.
  */
   __pyx_v_CONST_INT_1 = 1;
 
   /* "kron_solvers/solvers.pyx":77
  *     cdef int max_iter_1 = max_iter + 1
  *     cdef int CONST_INT_1 = 1
- *     cdef double CONST_FLOAT_1 = 1.             # <<<<<<<<<<<<<<
- *     cdef double CONST_FLOAT_m1 = -1.
- *     cdef double CONST_FLOAT_0 = 0.
+ *     cdef double CONST_DOUBLE_1 = 1.             # <<<<<<<<<<<<<<
+ *     cdef double CONST_DOUBLE_m1 = -1.
+ *     cdef double CONST_DOUBLE_0 = 0.
  */
-  __pyx_v_CONST_FLOAT_1 = 1.;
+  __pyx_v_CONST_DOUBLE_1 = 1.;
 
   /* "kron_solvers/solvers.pyx":78
  *     cdef int CONST_INT_1 = 1
- *     cdef double CONST_FLOAT_1 = 1.
- *     cdef double CONST_FLOAT_m1 = -1.             # <<<<<<<<<<<<<<
- *     cdef double CONST_FLOAT_0 = 0.
- *     cdef double CONST_FLOAT_3 = 3.
+ *     cdef double CONST_DOUBLE_1 = 1.
+ *     cdef double CONST_DOUBLE_m1 = -1.             # <<<<<<<<<<<<<<
+ *     cdef double CONST_DOUBLE_0 = 0.
+ *     cdef double CONST_DOUBLE_3 = 3.
  */
-  __pyx_v_CONST_FLOAT_m1 = -1.;
+  __pyx_v_CONST_DOUBLE_m1 = -1.;
 
   /* "kron_solvers/solvers.pyx":79
- *     cdef double CONST_FLOAT_1 = 1.
- *     cdef double CONST_FLOAT_m1 = -1.
- *     cdef double CONST_FLOAT_0 = 0.             # <<<<<<<<<<<<<<
- *     cdef double CONST_FLOAT_3 = 3.
+ *     cdef double CONST_DOUBLE_1 = 1.
+ *     cdef double CONST_DOUBLE_m1 = -1.
+ *     cdef double CONST_DOUBLE_0 = 0.             # <<<<<<<<<<<<<<
+ *     cdef double CONST_DOUBLE_3 = 3.
  *     cdef int N = r.shape[0]
  */
-  __pyx_v_CONST_FLOAT_0 = 0.;
+  __pyx_v_CONST_DOUBLE_0 = 0.;
 
   /* "kron_solvers/solvers.pyx":80
- *     cdef double CONST_FLOAT_m1 = -1.
- *     cdef double CONST_FLOAT_0 = 0.
- *     cdef double CONST_FLOAT_3 = 3.             # <<<<<<<<<<<<<<
+ *     cdef double CONST_DOUBLE_m1 = -1.
+ *     cdef double CONST_DOUBLE_0 = 0.
+ *     cdef double CONST_DOUBLE_3 = 3.             # <<<<<<<<<<<<<<
  *     cdef int N = r.shape[0]
  *     cdef double neg_t = -t
  */
-  __pyx_v_CONST_FLOAT_3 = 3.;
+  __pyx_v_CONST_DOUBLE_3 = 3.;
 
   /* "kron_solvers/solvers.pyx":81
- *     cdef double CONST_FLOAT_0 = 0.
- *     cdef double CONST_FLOAT_3 = 3.
+ *     cdef double CONST_DOUBLE_0 = 0.
+ *     cdef double CONST_DOUBLE_3 = 3.
  *     cdef int N = r.shape[0]             # <<<<<<<<<<<<<<
  *     cdef double neg_t = -t
  *     cdef double s
@@ -17961,7 +17960,7 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
   __pyx_v_N = (__pyx_v_r.shape[0]);
 
   /* "kron_solvers/solvers.pyx":82
- *     cdef double CONST_FLOAT_3 = 3.
+ *     cdef double CONST_DOUBLE_3 = 3.
  *     cdef int N = r.shape[0]
  *     cdef double neg_t = -t             # <<<<<<<<<<<<<<
  *     cdef double s
@@ -18003,7 +18002,7 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
  *     dcopy(&q, &x0[0], &CONST_INT_1, &y0[0], &CONST_INT_1) # y0[:] = x0
  * 
  *     dcopy(&N, &b[0], &CONST_INT_1, &r[0], &CONST_INT_1) # r[:] = b             # <<<<<<<<<<<<<<
- *     matvec(&p, &q, &CONST_FLOAT_1, &X2[0,0], &x0[0], &CONST_INT_1, &CONST_FLOAT_0, &aux_p[0], &n, &CONST_FLOAT_m1, &X1[0,0], &r[0]) # r -= A.matvec(x0)
+ *     matvec(&p, &q, &CONST_DOUBLE_1, &X2[0,0], &x0[0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &n, &CONST_DOUBLE_m1, &X1[0,0], &r[0]) # r -= A.matvec(x0)
  * 
  */
   __pyx_t_2 = 0;
@@ -18013,7 +18012,7 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
   /* "kron_solvers/solvers.pyx":93
  * 
  *     dcopy(&N, &b[0], &CONST_INT_1, &r[0], &CONST_INT_1) # r[:] = b
- *     matvec(&p, &q, &CONST_FLOAT_1, &X2[0,0], &x0[0], &CONST_INT_1, &CONST_FLOAT_0, &aux_p[0], &n, &CONST_FLOAT_m1, &X1[0,0], &r[0]) # r -= A.matvec(x0)             # <<<<<<<<<<<<<<
+ *     matvec(&p, &q, &CONST_DOUBLE_1, &X2[0,0], &x0[0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &n, &CONST_DOUBLE_m1, &X1[0,0], &r[0]) # r -= A.matvec(x0)             # <<<<<<<<<<<<<<
  * 
  *     for k in range(1, max_iter_1):
  */
@@ -18024,10 +18023,10 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
   __pyx_t_5 = 0;
   __pyx_t_6 = 0;
   __pyx_t_7 = 0;
-  __pyx_f_12kron_solvers_7solvers_matvec((&__pyx_v_p), (&__pyx_v_q), (&__pyx_v_CONST_FLOAT_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2.data) + __pyx_t_1)) ) + __pyx_t_2 * __pyx_v_X2.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x0.data) + __pyx_t_3)) )))), (&__pyx_v_CONST_INT_1), (&__pyx_v_CONST_FLOAT_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_p.data) + __pyx_t_4)) )))), (&__pyx_v_n), (&__pyx_v_CONST_FLOAT_m1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1.data) + __pyx_t_5)) ) + __pyx_t_6 * __pyx_v_X1.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_7)) )))));
+  __pyx_f_12kron_solvers_7solvers_matvec((&__pyx_v_p), (&__pyx_v_q), (&__pyx_v_CONST_DOUBLE_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2.data) + __pyx_t_1)) ) + __pyx_t_2 * __pyx_v_X2.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x0.data) + __pyx_t_3)) )))), (&__pyx_v_CONST_INT_1), (&__pyx_v_CONST_DOUBLE_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_p.data) + __pyx_t_4)) )))), (&__pyx_v_n), (&__pyx_v_CONST_DOUBLE_m1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1.data) + __pyx_t_5)) ) + __pyx_t_6 * __pyx_v_X1.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_7)) )))));
 
   /* "kron_solvers/solvers.pyx":95
- *     matvec(&p, &q, &CONST_FLOAT_1, &X2[0,0], &x0[0], &CONST_INT_1, &CONST_FLOAT_0, &aux_p[0], &n, &CONST_FLOAT_m1, &X1[0,0], &r[0]) # r -= A.matvec(x0)
+ *     matvec(&p, &q, &CONST_DOUBLE_1, &X2[0,0], &x0[0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &n, &CONST_DOUBLE_m1, &X1[0,0], &r[0]) # r -= A.matvec(x0)
  * 
  *     for k in range(1, max_iter_1):             # <<<<<<<<<<<<<<
  *         # gradient of f
@@ -18042,7 +18041,7 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
  *         # grad_f *= alpha
  *         # grad_f -= A.rmatvec(r)
  *         dcopy(&q, &y0[0], &CONST_INT_1, &grad_f[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
- *         rmatvec(&p, &n, &CONST_FLOAT_1, &r[0], &X1[0,0], &CONST_INT_1, &CONST_FLOAT_0, &aux_p[0], &q, &CONST_FLOAT_m1, &X2[0,0], &alpha, &grad_f[0])
+ *         rmatvec(&p, &n, &CONST_DOUBLE_1, &r[0], &X1[0,0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &q, &CONST_DOUBLE_m1, &X2[0,0], &alpha, &grad_f[0])
  * 
  */
     __pyx_t_7 = 0;
@@ -18052,7 +18051,7 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
     /* "kron_solvers/solvers.pyx":101
  *         # grad_f -= A.rmatvec(r)
  *         dcopy(&q, &y0[0], &CONST_INT_1, &grad_f[0], &CONST_INT_1)
- *         rmatvec(&p, &n, &CONST_FLOAT_1, &r[0], &X1[0,0], &CONST_INT_1, &CONST_FLOAT_0, &aux_p[0], &q, &CONST_FLOAT_m1, &X2[0,0], &alpha, &grad_f[0])             # <<<<<<<<<<<<<<
+ *         rmatvec(&p, &n, &CONST_DOUBLE_1, &r[0], &X1[0,0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &q, &CONST_DOUBLE_m1, &X2[0,0], &alpha, &grad_f[0])             # <<<<<<<<<<<<<<
  * 
  *         # gradient step (view of grad_f)
  */
@@ -18063,13 +18062,13 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
     __pyx_t_3 = 0;
     __pyx_t_2 = 0;
     __pyx_t_1 = 0;
-    __pyx_f_12kron_solvers_7solvers_rmatvec((&__pyx_v_p), (&__pyx_v_n), (&__pyx_v_CONST_FLOAT_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_6)) )))), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1.data) + __pyx_t_7)) ) + __pyx_t_5 * __pyx_v_X1.strides[1]) )))), (&__pyx_v_CONST_INT_1), (&__pyx_v_CONST_FLOAT_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_p.data) + __pyx_t_4)) )))), (&__pyx_v_q), (&__pyx_v_CONST_FLOAT_m1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2.data) + __pyx_t_3)) ) + __pyx_t_2 * __pyx_v_X2.strides[1]) )))), (&__pyx_v_alpha), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_grad_f.data) + __pyx_t_1)) )))));
+    __pyx_f_12kron_solvers_7solvers_rmatvec((&__pyx_v_p), (&__pyx_v_n), (&__pyx_v_CONST_DOUBLE_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_6)) )))), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1.data) + __pyx_t_7)) ) + __pyx_t_5 * __pyx_v_X1.strides[1]) )))), (&__pyx_v_CONST_INT_1), (&__pyx_v_CONST_DOUBLE_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_p.data) + __pyx_t_4)) )))), (&__pyx_v_q), (&__pyx_v_CONST_DOUBLE_m1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2.data) + __pyx_t_3)) ) + __pyx_t_2 * __pyx_v_X2.strides[1]) )))), (&__pyx_v_alpha), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_grad_f.data) + __pyx_t_1)) )))));
 
     /* "kron_solvers/solvers.pyx":106
  *         # v *= -t
  *         # v += y0
  *         dscal(&q, &neg_t, v, &CONST_INT_1)             # <<<<<<<<<<<<<<
- *         daxpy(&q, &CONST_FLOAT_1, &y0[0], &CONST_INT_1, v, &CONST_INT_1)
+ *         daxpy(&q, &CONST_DOUBLE_1, &y0[0], &CONST_INT_1, v, &CONST_INT_1)
  * 
  */
     __pyx_f_5scipy_6linalg_11cython_blas_dscal((&__pyx_v_q), (&__pyx_v_neg_t), __pyx_v_v, (&__pyx_v_CONST_INT_1));
@@ -18077,25 +18076,25 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
     /* "kron_solvers/solvers.pyx":107
  *         # v += y0
  *         dscal(&q, &neg_t, v, &CONST_INT_1)
- *         daxpy(&q, &CONST_FLOAT_1, &y0[0], &CONST_INT_1, v, &CONST_INT_1)             # <<<<<<<<<<<<<<
+ *         daxpy(&q, &CONST_DOUBLE_1, &y0[0], &CONST_INT_1, v, &CONST_INT_1)             # <<<<<<<<<<<<<<
  * 
  *         # proximal of ||x||_2 (view of v)
  */
     __pyx_t_1 = 0;
-    __pyx_f_5scipy_6linalg_11cython_blas_daxpy((&__pyx_v_q), (&__pyx_v_CONST_FLOAT_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_y0.data) + __pyx_t_1)) )))), (&__pyx_v_CONST_INT_1), __pyx_v_v, (&__pyx_v_CONST_INT_1));
+    __pyx_f_5scipy_6linalg_11cython_blas_daxpy((&__pyx_v_q), (&__pyx_v_CONST_DOUBLE_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_y0.data) + __pyx_t_1)) )))), (&__pyx_v_CONST_INT_1), __pyx_v_v, (&__pyx_v_CONST_INT_1));
 
     /* "kron_solvers/solvers.pyx":113
  *         # x1[:] = v
  *         # x1 *= s
- *         s = fmax(CONST_FLOAT_0, CONST_FLOAT_1 + (neg_t * beta) / dnrm2(&q, v, &CONST_INT_1))             # <<<<<<<<<<<<<<
+ *         s = fmax(CONST_DOUBLE_0, CONST_DOUBLE_1 + (neg_t * beta) / dnrm2(&q, v, &CONST_INT_1))             # <<<<<<<<<<<<<<
  *         dcopy(&q, v, &CONST_INT_1, &x1[0], &CONST_INT_1)
  *         dscal(&q, &s, &x1[0], &CONST_INT_1)
  */
-    __pyx_v_s = __pyx_f_12kron_solvers_7solvers_fmax(__pyx_v_CONST_FLOAT_0, (__pyx_v_CONST_FLOAT_1 + (((__pyx_t_5scipy_6linalg_11cython_blas_d)(__pyx_v_neg_t * __pyx_v_beta)) / __pyx_f_5scipy_6linalg_11cython_blas_dnrm2((&__pyx_v_q), __pyx_v_v, (&__pyx_v_CONST_INT_1)))));
+    __pyx_v_s = __pyx_f_12kron_solvers_7solvers_fmax(__pyx_v_CONST_DOUBLE_0, (__pyx_v_CONST_DOUBLE_1 + (((__pyx_t_5scipy_6linalg_11cython_blas_d)(__pyx_v_neg_t * __pyx_v_beta)) / __pyx_f_5scipy_6linalg_11cython_blas_dnrm2((&__pyx_v_q), __pyx_v_v, (&__pyx_v_CONST_INT_1)))));
 
     /* "kron_solvers/solvers.pyx":114
  *         # x1 *= s
- *         s = fmax(CONST_FLOAT_0, CONST_FLOAT_1 + (neg_t * beta) / dnrm2(&q, v, &CONST_INT_1))
+ *         s = fmax(CONST_DOUBLE_0, CONST_DOUBLE_1 + (neg_t * beta) / dnrm2(&q, v, &CONST_INT_1))
  *         dcopy(&q, v, &CONST_INT_1, &x1[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
  *         dscal(&q, &s, &x1[0], &CONST_INT_1)
  * 
@@ -18104,7 +18103,7 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
     __pyx_f_5scipy_6linalg_11cython_blas_dcopy((&__pyx_v_q), __pyx_v_v, (&__pyx_v_CONST_INT_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x1.data) + __pyx_t_1)) )))), (&__pyx_v_CONST_INT_1));
 
     /* "kron_solvers/solvers.pyx":115
- *         s = fmax(CONST_FLOAT_0, CONST_FLOAT_1 + (neg_t * beta) / dnrm2(&q, v, &CONST_INT_1))
+ *         s = fmax(CONST_DOUBLE_0, CONST_DOUBLE_1 + (neg_t * beta) / dnrm2(&q, v, &CONST_INT_1))
  *         dcopy(&q, v, &CONST_INT_1, &x1[0], &CONST_INT_1)
  *         dscal(&q, &s, &x1[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
  * 
@@ -18117,7 +18116,7 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
  *         # dx[:] = x1
  *         # dx -= x0
  *         dcopy(&q, &x1[0], &CONST_INT_1, &dx[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
- *         daxpy(&q, &CONST_FLOAT_m1, &x0[0], &CONST_INT_1, &dx[0], &CONST_INT_1)
+ *         daxpy(&q, &CONST_DOUBLE_m1, &x0[0], &CONST_INT_1, &dx[0], &CONST_INT_1)
  *         # if np.linalg.norm(dx)/t < tol: # norm of generalized gradient
  */
     __pyx_t_1 = 0;
@@ -18127,29 +18126,29 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
     /* "kron_solvers/solvers.pyx":121
  *         # dx -= x0
  *         dcopy(&q, &x1[0], &CONST_INT_1, &dx[0], &CONST_INT_1)
- *         daxpy(&q, &CONST_FLOAT_m1, &x0[0], &CONST_INT_1, &dx[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
+ *         daxpy(&q, &CONST_DOUBLE_m1, &x0[0], &CONST_INT_1, &dx[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
  *         # if np.linalg.norm(dx)/t < tol: # norm of generalized gradient
  *             # break
  */
     __pyx_t_2 = 0;
     __pyx_t_1 = 0;
-    __pyx_f_5scipy_6linalg_11cython_blas_daxpy((&__pyx_v_q), (&__pyx_v_CONST_FLOAT_m1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x0.data) + __pyx_t_2)) )))), (&__pyx_v_CONST_INT_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_dx.data) + __pyx_t_1)) )))), (&__pyx_v_CONST_INT_1));
+    __pyx_f_5scipy_6linalg_11cython_blas_daxpy((&__pyx_v_q), (&__pyx_v_CONST_DOUBLE_m1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x0.data) + __pyx_t_2)) )))), (&__pyx_v_CONST_INT_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_dx.data) + __pyx_t_1)) )))), (&__pyx_v_CONST_INT_1));
 
     /* "kron_solvers/solvers.pyx":124
  *         # if np.linalg.norm(dx)/t < tol: # norm of generalized gradient
  *             # break
- *         if dnrm2(&q, &dx[0], &CONST_INT_1) < dnrm2(&q, &x0[0], &CONST_INT_1) * tol:             # <<<<<<<<<<<<<<
+ *         if dnrm2(&q, &dx[0], &CONST_INT_1) <= dnrm2(&q, &x0[0], &CONST_INT_1) * tol:             # <<<<<<<<<<<<<<
  *             break
  *         # printf('%f\n', dnrm2(&q, &dx[0], &CONST_INT_1))
  */
     __pyx_t_1 = 0;
     __pyx_t_2 = 0;
-    __pyx_t_11 = (__pyx_f_5scipy_6linalg_11cython_blas_dnrm2((&__pyx_v_q), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_dx.data) + __pyx_t_1)) )))), (&__pyx_v_CONST_INT_1)) < (__pyx_f_5scipy_6linalg_11cython_blas_dnrm2((&__pyx_v_q), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x0.data) + __pyx_t_2)) )))), (&__pyx_v_CONST_INT_1)) * __pyx_v_tol));
+    __pyx_t_11 = (__pyx_f_5scipy_6linalg_11cython_blas_dnrm2((&__pyx_v_q), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_dx.data) + __pyx_t_1)) )))), (&__pyx_v_CONST_INT_1)) <= (__pyx_f_5scipy_6linalg_11cython_blas_dnrm2((&__pyx_v_q), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x0.data) + __pyx_t_2)) )))), (&__pyx_v_CONST_INT_1)) * __pyx_v_tol));
     if (__pyx_t_11) {
 
       /* "kron_solvers/solvers.pyx":125
  *             # break
- *         if dnrm2(&q, &dx[0], &CONST_INT_1) < dnrm2(&q, &x0[0], &CONST_INT_1) * tol:
+ *         if dnrm2(&q, &dx[0], &CONST_INT_1) <= dnrm2(&q, &x0[0], &CONST_INT_1) * tol:
  *             break             # <<<<<<<<<<<<<<
  *         # printf('%f\n', dnrm2(&q, &dx[0], &CONST_INT_1))
  * 
@@ -18159,7 +18158,7 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
       /* "kron_solvers/solvers.pyx":124
  *         # if np.linalg.norm(dx)/t < tol: # norm of generalized gradient
  *             # break
- *         if dnrm2(&q, &dx[0], &CONST_INT_1) < dnrm2(&q, &x0[0], &CONST_INT_1) * tol:             # <<<<<<<<<<<<<<
+ *         if dnrm2(&q, &dx[0], &CONST_INT_1) <= dnrm2(&q, &x0[0], &CONST_INT_1) * tol:             # <<<<<<<<<<<<<<
  *             break
  *         # printf('%f\n', dnrm2(&q, &dx[0], &CONST_INT_1))
  */
@@ -18168,27 +18167,27 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
     /* "kron_solvers/solvers.pyx":133
  *         # y1 *= k/(k+3.)
  *         # y1 += x1
- *         h = k / (k + CONST_FLOAT_3)             # <<<<<<<<<<<<<<
+ *         h = k / (k + CONST_DOUBLE_3)             # <<<<<<<<<<<<<<
  *         dcopy(&q, &dx[0], &CONST_INT_1, y1, &CONST_INT_1)
  *         dscal(&q, &h, y1, &CONST_INT_1)
  */
-    __pyx_v_h = (((double)__pyx_v_k) / (__pyx_v_k + __pyx_v_CONST_FLOAT_3));
+    __pyx_v_h = (((double)__pyx_v_k) / (__pyx_v_k + __pyx_v_CONST_DOUBLE_3));
 
     /* "kron_solvers/solvers.pyx":134
  *         # y1 += x1
- *         h = k / (k + CONST_FLOAT_3)
+ *         h = k / (k + CONST_DOUBLE_3)
  *         dcopy(&q, &dx[0], &CONST_INT_1, y1, &CONST_INT_1)             # <<<<<<<<<<<<<<
  *         dscal(&q, &h, y1, &CONST_INT_1)
- *         daxpy(&q, &CONST_FLOAT_1, &x1[0], &CONST_INT_1, y1, &CONST_INT_1)
+ *         daxpy(&q, &CONST_DOUBLE_1, &x1[0], &CONST_INT_1, y1, &CONST_INT_1)
  */
     __pyx_t_2 = 0;
     __pyx_f_5scipy_6linalg_11cython_blas_dcopy((&__pyx_v_q), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_dx.data) + __pyx_t_2)) )))), (&__pyx_v_CONST_INT_1), __pyx_v_y1, (&__pyx_v_CONST_INT_1));
 
     /* "kron_solvers/solvers.pyx":135
- *         h = k / (k + CONST_FLOAT_3)
+ *         h = k / (k + CONST_DOUBLE_3)
  *         dcopy(&q, &dx[0], &CONST_INT_1, y1, &CONST_INT_1)
  *         dscal(&q, &h, y1, &CONST_INT_1)             # <<<<<<<<<<<<<<
- *         daxpy(&q, &CONST_FLOAT_1, &x1[0], &CONST_INT_1, y1, &CONST_INT_1)
+ *         daxpy(&q, &CONST_DOUBLE_1, &x1[0], &CONST_INT_1, y1, &CONST_INT_1)
  * 
  */
     __pyx_f_5scipy_6linalg_11cython_blas_dscal((&__pyx_v_q), (&__pyx_v_h), __pyx_v_y1, (&__pyx_v_CONST_INT_1));
@@ -18196,19 +18195,19 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
     /* "kron_solvers/solvers.pyx":136
  *         dcopy(&q, &dx[0], &CONST_INT_1, y1, &CONST_INT_1)
  *         dscal(&q, &h, y1, &CONST_INT_1)
- *         daxpy(&q, &CONST_FLOAT_1, &x1[0], &CONST_INT_1, y1, &CONST_INT_1)             # <<<<<<<<<<<<<<
+ *         daxpy(&q, &CONST_DOUBLE_1, &x1[0], &CONST_INT_1, y1, &CONST_INT_1)             # <<<<<<<<<<<<<<
  * 
  *         # updates
  */
     __pyx_t_2 = 0;
-    __pyx_f_5scipy_6linalg_11cython_blas_daxpy((&__pyx_v_q), (&__pyx_v_CONST_FLOAT_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x1.data) + __pyx_t_2)) )))), (&__pyx_v_CONST_INT_1), __pyx_v_y1, (&__pyx_v_CONST_INT_1));
+    __pyx_f_5scipy_6linalg_11cython_blas_daxpy((&__pyx_v_q), (&__pyx_v_CONST_DOUBLE_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x1.data) + __pyx_t_2)) )))), (&__pyx_v_CONST_INT_1), __pyx_v_y1, (&__pyx_v_CONST_INT_1));
 
     /* "kron_solvers/solvers.pyx":142
  *         # y0[:] = y1
  *         # r -= A.matvec(dx)
  *         dcopy(&q, &x1[0], &CONST_INT_1, &x0[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
  *         dcopy(&q, y1, &CONST_INT_1, &y0[0], &CONST_INT_1)
- *         matvec(&p, &q, &CONST_FLOAT_1, &X2[0,0], &dx[0], &CONST_INT_1, &CONST_FLOAT_0, &aux_p[0], &n, &CONST_FLOAT_m1, &X1[0,0], &r[0])
+ *         matvec(&p, &q, &CONST_DOUBLE_1, &X2[0,0], &dx[0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &n, &CONST_DOUBLE_m1, &X1[0,0], &r[0])
  */
     __pyx_t_2 = 0;
     __pyx_t_1 = 0;
@@ -18218,7 +18217,7 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
  *         # r -= A.matvec(dx)
  *         dcopy(&q, &x1[0], &CONST_INT_1, &x0[0], &CONST_INT_1)
  *         dcopy(&q, y1, &CONST_INT_1, &y0[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
- *         matvec(&p, &q, &CONST_FLOAT_1, &X2[0,0], &dx[0], &CONST_INT_1, &CONST_FLOAT_0, &aux_p[0], &n, &CONST_FLOAT_m1, &X1[0,0], &r[0])
+ *         matvec(&p, &q, &CONST_DOUBLE_1, &X2[0,0], &dx[0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &n, &CONST_DOUBLE_m1, &X1[0,0], &r[0])
  * 
  */
     __pyx_t_1 = 0;
@@ -18227,7 +18226,7 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
     /* "kron_solvers/solvers.pyx":144
  *         dcopy(&q, &x1[0], &CONST_INT_1, &x0[0], &CONST_INT_1)
  *         dcopy(&q, y1, &CONST_INT_1, &y0[0], &CONST_INT_1)
- *         matvec(&p, &q, &CONST_FLOAT_1, &X2[0,0], &dx[0], &CONST_INT_1, &CONST_FLOAT_0, &aux_p[0], &n, &CONST_FLOAT_m1, &X1[0,0], &r[0])             # <<<<<<<<<<<<<<
+ *         matvec(&p, &q, &CONST_DOUBLE_1, &X2[0,0], &dx[0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &n, &CONST_DOUBLE_m1, &X1[0,0], &r[0])             # <<<<<<<<<<<<<<
  * 
  *     else:
  */
@@ -18238,7 +18237,7 @@ static int __pyx_f_12kron_solvers_7solvers_apg(__Pyx_memviewslice __pyx_v_X2, __
     __pyx_t_5 = 0;
     __pyx_t_7 = 0;
     __pyx_t_6 = 0;
-    __pyx_f_12kron_solvers_7solvers_matvec((&__pyx_v_p), (&__pyx_v_q), (&__pyx_v_CONST_FLOAT_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2.data) + __pyx_t_1)) ) + __pyx_t_2 * __pyx_v_X2.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_dx.data) + __pyx_t_3)) )))), (&__pyx_v_CONST_INT_1), (&__pyx_v_CONST_FLOAT_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_p.data) + __pyx_t_4)) )))), (&__pyx_v_n), (&__pyx_v_CONST_FLOAT_m1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1.data) + __pyx_t_5)) ) + __pyx_t_7 * __pyx_v_X1.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_6)) )))));
+    __pyx_f_12kron_solvers_7solvers_matvec((&__pyx_v_p), (&__pyx_v_q), (&__pyx_v_CONST_DOUBLE_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2.data) + __pyx_t_1)) ) + __pyx_t_2 * __pyx_v_X2.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_dx.data) + __pyx_t_3)) )))), (&__pyx_v_CONST_INT_1), (&__pyx_v_CONST_DOUBLE_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_p.data) + __pyx_t_4)) )))), (&__pyx_v_n), (&__pyx_v_CONST_DOUBLE_m1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1.data) + __pyx_t_5)) ) + __pyx_t_7 * __pyx_v_X1.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_6)) )))));
   }
   /*else*/ {
 
@@ -18657,9 +18656,9 @@ static int __pyx_f_12kron_solvers_7solvers_bcd(__Pyx_memviewslice __pyx_v_X2, __
   int __pyx_v_ext_max_iter_1;
   int __pyx_v_j;
   int __pyx_v_CONST_INT_1;
-  double __pyx_v_CONST_FLOAT_1;
-  double __pyx_v_CONST_FLOAT_m1;
-  double __pyx_v_CONST_FLOAT_0;
+  double __pyx_v_CONST_DOUBLE_1;
+  double __pyx_v_CONST_DOUBLE_m1;
+  double __pyx_v_CONST_DOUBLE_0;
   int __pyx_v_N;
   int __pyx_v_p;
   int __pyx_v_q;
@@ -18719,41 +18718,41 @@ static int __pyx_f_12kron_solvers_7solvers_bcd(__Pyx_memviewslice __pyx_v_X2, __
  *     cdef int ext_max_iter_1 = ext_max_iter + 1
  *     cdef int j, aux
  *     cdef int CONST_INT_1 = 1             # <<<<<<<<<<<<<<
- *     cdef double CONST_FLOAT_1 = 1.
- *     cdef double CONST_FLOAT_m1 = -1.
+ *     cdef double CONST_DOUBLE_1 = 1.
+ *     cdef double CONST_DOUBLE_m1 = -1.
  */
   __pyx_v_CONST_INT_1 = 1;
 
   /* "kron_solvers/solvers.pyx":182
  *     cdef int j, aux
  *     cdef int CONST_INT_1 = 1
- *     cdef double CONST_FLOAT_1 = 1.             # <<<<<<<<<<<<<<
- *     cdef double CONST_FLOAT_m1 = -1.
- *     cdef double CONST_FLOAT_0 = 0.
+ *     cdef double CONST_DOUBLE_1 = 1.             # <<<<<<<<<<<<<<
+ *     cdef double CONST_DOUBLE_m1 = -1.
+ *     cdef double CONST_DOUBLE_0 = 0.
  */
-  __pyx_v_CONST_FLOAT_1 = 1.;
+  __pyx_v_CONST_DOUBLE_1 = 1.;
 
   /* "kron_solvers/solvers.pyx":183
  *     cdef int CONST_INT_1 = 1
- *     cdef double CONST_FLOAT_1 = 1.
- *     cdef double CONST_FLOAT_m1 = -1.             # <<<<<<<<<<<<<<
- *     cdef double CONST_FLOAT_0 = 0.
+ *     cdef double CONST_DOUBLE_1 = 1.
+ *     cdef double CONST_DOUBLE_m1 = -1.             # <<<<<<<<<<<<<<
+ *     cdef double CONST_DOUBLE_0 = 0.
  *     cdef int N = y.shape[0]# pxn
  */
-  __pyx_v_CONST_FLOAT_m1 = -1.;
+  __pyx_v_CONST_DOUBLE_m1 = -1.;
 
   /* "kron_solvers/solvers.pyx":184
- *     cdef double CONST_FLOAT_1 = 1.
- *     cdef double CONST_FLOAT_m1 = -1.
- *     cdef double CONST_FLOAT_0 = 0.             # <<<<<<<<<<<<<<
+ *     cdef double CONST_DOUBLE_1 = 1.
+ *     cdef double CONST_DOUBLE_m1 = -1.
+ *     cdef double CONST_DOUBLE_0 = 0.             # <<<<<<<<<<<<<<
  *     cdef int N = y.shape[0]# pxn
  *     cdef int p = X2.shape[0]
  */
-  __pyx_v_CONST_FLOAT_0 = 0.;
+  __pyx_v_CONST_DOUBLE_0 = 0.;
 
   /* "kron_solvers/solvers.pyx":185
- *     cdef double CONST_FLOAT_m1 = -1.
- *     cdef double CONST_FLOAT_0 = 0.
+ *     cdef double CONST_DOUBLE_m1 = -1.
+ *     cdef double CONST_DOUBLE_0 = 0.
  *     cdef int N = y.shape[0]# pxn             # <<<<<<<<<<<<<<
  *     cdef int p = X2.shape[0]
  *     cdef int q = X2.shape[1]
@@ -18761,7 +18760,7 @@ static int __pyx_f_12kron_solvers_7solvers_bcd(__Pyx_memviewslice __pyx_v_X2, __
   __pyx_v_N = (__pyx_v_y.shape[0]);
 
   /* "kron_solvers/solvers.pyx":186
- *     cdef double CONST_FLOAT_0 = 0.
+ *     cdef double CONST_DOUBLE_0 = 0.
  *     cdef int N = y.shape[0]# pxn
  *     cdef int p = X2.shape[0]             # <<<<<<<<<<<<<<
  *     cdef int q = X2.shape[1]
@@ -18818,8 +18817,8 @@ static int __pyx_f_12kron_solvers_7solvers_bcd(__Pyx_memviewslice __pyx_v_X2, __
  *     # r[:] = y
  *     # r[:] -= X2@X0@X1.T
  *     dcopy(&N, &y[0], &CONST_INT_1, &r[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
- *     dgemm('n', 'n', &p, &k, &q, &CONST_FLOAT_1, &X2[0,0], &p, &x0[0], &q, &CONST_FLOAT_0, &aux_pk[0,0], &p)
- *     dgemm('n', 't', &p, &n, &k, &CONST_FLOAT_m1, &aux_pk[0,0], &p, &X1[0,0], &n, &CONST_FLOAT_1, &r[0], &p)
+ *     dgemm('n', 'n', &p, &k, &q, &CONST_DOUBLE_1, &X2[0,0], &p, &x0[0], &q, &CONST_DOUBLE_0, &aux_pk[0,0], &p)
+ *     dgemm('n', 't', &p, &n, &k, &CONST_DOUBLE_m1, &aux_pk[0,0], &p, &X1[0,0], &n, &CONST_DOUBLE_1, &r[0], &p)
  */
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
@@ -18828,8 +18827,8 @@ static int __pyx_f_12kron_solvers_7solvers_bcd(__Pyx_memviewslice __pyx_v_X2, __
   /* "kron_solvers/solvers.pyx":206
  *     # r[:] -= X2@X0@X1.T
  *     dcopy(&N, &y[0], &CONST_INT_1, &r[0], &CONST_INT_1)
- *     dgemm('n', 'n', &p, &k, &q, &CONST_FLOAT_1, &X2[0,0], &p, &x0[0], &q, &CONST_FLOAT_0, &aux_pk[0,0], &p)             # <<<<<<<<<<<<<<
- *     dgemm('n', 't', &p, &n, &k, &CONST_FLOAT_m1, &aux_pk[0,0], &p, &X1[0,0], &n, &CONST_FLOAT_1, &r[0], &p)
+ *     dgemm('n', 'n', &p, &k, &q, &CONST_DOUBLE_1, &X2[0,0], &p, &x0[0], &q, &CONST_DOUBLE_0, &aux_pk[0,0], &p)             # <<<<<<<<<<<<<<
+ *     dgemm('n', 't', &p, &n, &k, &CONST_DOUBLE_m1, &aux_pk[0,0], &p, &X1[0,0], &n, &CONST_DOUBLE_1, &r[0], &p)
  * 
  */
   __pyx_t_2 = 0;
@@ -18837,12 +18836,12 @@ static int __pyx_f_12kron_solvers_7solvers_bcd(__Pyx_memviewslice __pyx_v_X2, __
   __pyx_t_3 = 0;
   __pyx_t_4 = 0;
   __pyx_t_5 = 0;
-  __pyx_f_5scipy_6linalg_11cython_blas_dgemm(((char *)"n"), ((char *)"n"), (&__pyx_v_p), (&__pyx_v_k), (&__pyx_v_q), (&__pyx_v_CONST_FLOAT_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2.data) + __pyx_t_2)) ) + __pyx_t_1 * __pyx_v_X2.strides[1]) )))), (&__pyx_v_p), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x0.data) + __pyx_t_3)) )))), (&__pyx_v_q), (&__pyx_v_CONST_FLOAT_0), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_pk.data) + __pyx_t_4)) ) + __pyx_t_5 * __pyx_v_aux_pk.strides[1]) )))), (&__pyx_v_p));
+  __pyx_f_5scipy_6linalg_11cython_blas_dgemm(((char *)"n"), ((char *)"n"), (&__pyx_v_p), (&__pyx_v_k), (&__pyx_v_q), (&__pyx_v_CONST_DOUBLE_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2.data) + __pyx_t_2)) ) + __pyx_t_1 * __pyx_v_X2.strides[1]) )))), (&__pyx_v_p), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x0.data) + __pyx_t_3)) )))), (&__pyx_v_q), (&__pyx_v_CONST_DOUBLE_0), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_pk.data) + __pyx_t_4)) ) + __pyx_t_5 * __pyx_v_aux_pk.strides[1]) )))), (&__pyx_v_p));
 
   /* "kron_solvers/solvers.pyx":207
  *     dcopy(&N, &y[0], &CONST_INT_1, &r[0], &CONST_INT_1)
- *     dgemm('n', 'n', &p, &k, &q, &CONST_FLOAT_1, &X2[0,0], &p, &x0[0], &q, &CONST_FLOAT_0, &aux_pk[0,0], &p)
- *     dgemm('n', 't', &p, &n, &k, &CONST_FLOAT_m1, &aux_pk[0,0], &p, &X1[0,0], &n, &CONST_FLOAT_1, &r[0], &p)             # <<<<<<<<<<<<<<
+ *     dgemm('n', 'n', &p, &k, &q, &CONST_DOUBLE_1, &X2[0,0], &p, &x0[0], &q, &CONST_DOUBLE_0, &aux_pk[0,0], &p)
+ *     dgemm('n', 't', &p, &n, &k, &CONST_DOUBLE_m1, &aux_pk[0,0], &p, &X1[0,0], &n, &CONST_DOUBLE_1, &r[0], &p)             # <<<<<<<<<<<<<<
  * 
  *     # # r1[:] = r0
  */
@@ -18851,7 +18850,7 @@ static int __pyx_f_12kron_solvers_7solvers_bcd(__Pyx_memviewslice __pyx_v_X2, __
   __pyx_t_3 = 0;
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
-  __pyx_f_5scipy_6linalg_11cython_blas_dgemm(((char *)"n"), ((char *)"t"), (&__pyx_v_p), (&__pyx_v_n), (&__pyx_v_k), (&__pyx_v_CONST_FLOAT_m1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_pk.data) + __pyx_t_5)) ) + __pyx_t_4 * __pyx_v_aux_pk.strides[1]) )))), (&__pyx_v_p), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1.data) + __pyx_t_3)) ) + __pyx_t_1 * __pyx_v_X1.strides[1]) )))), (&__pyx_v_n), (&__pyx_v_CONST_FLOAT_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_2)) )))), (&__pyx_v_p));
+  __pyx_f_5scipy_6linalg_11cython_blas_dgemm(((char *)"n"), ((char *)"t"), (&__pyx_v_p), (&__pyx_v_n), (&__pyx_v_k), (&__pyx_v_CONST_DOUBLE_m1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_pk.data) + __pyx_t_5)) ) + __pyx_t_4 * __pyx_v_aux_pk.strides[1]) )))), (&__pyx_v_p), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1.data) + __pyx_t_3)) ) + __pyx_t_1 * __pyx_v_X1.strides[1]) )))), (&__pyx_v_n), (&__pyx_v_CONST_DOUBLE_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_2)) )))), (&__pyx_v_p));
 
   /* "kron_solvers/solvers.pyx":213
  * 
@@ -19054,7 +19053,7 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_X2i, 0);
       /* "kron_solvers/solvers.pyx":231
  * 
  *             # r += Zi.matvec(xi)
- *             matvec(&p, &f, &CONST_FLOAT_1, &X2i[0,0], &xi[0], &CONST_INT_1, &CONST_FLOAT_0, &aux_p[0], &n, &CONST_FLOAT_1, &X1i[0,0], &r[0])             # <<<<<<<<<<<<<<
+ *             matvec(&p, &f, &CONST_DOUBLE_1, &X2i[0,0], &xi[0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &n, &CONST_DOUBLE_1, &X1i[0,0], &r[0])             # <<<<<<<<<<<<<<
  * 
  *             # Zi.rmatvec(r1)
  */
@@ -19065,12 +19064,12 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_X2i, 0);
       __pyx_t_5 = 0;
       __pyx_t_15 = 0;
       __pyx_t_16 = 0;
-      __pyx_f_12kron_solvers_7solvers_matvec((&__pyx_v_p), (&__pyx_v_f), (&__pyx_v_CONST_FLOAT_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2i.data) + __pyx_t_1)) ) + __pyx_t_2 * __pyx_v_X2i.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_xi.data) + __pyx_t_3)) )))), (&__pyx_v_CONST_INT_1), (&__pyx_v_CONST_FLOAT_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_p.data) + __pyx_t_4)) )))), (&__pyx_v_n), (&__pyx_v_CONST_FLOAT_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1i.data) + __pyx_t_5)) ) + __pyx_t_15 * __pyx_v_X1i.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_16)) )))));
+      __pyx_f_12kron_solvers_7solvers_matvec((&__pyx_v_p), (&__pyx_v_f), (&__pyx_v_CONST_DOUBLE_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2i.data) + __pyx_t_1)) ) + __pyx_t_2 * __pyx_v_X2i.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_xi.data) + __pyx_t_3)) )))), (&__pyx_v_CONST_INT_1), (&__pyx_v_CONST_DOUBLE_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_p.data) + __pyx_t_4)) )))), (&__pyx_v_n), (&__pyx_v_CONST_DOUBLE_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1i.data) + __pyx_t_5)) ) + __pyx_t_15 * __pyx_v_X1i.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_16)) )))));
 
       /* "kron_solvers/solvers.pyx":234
  * 
  *             # Zi.rmatvec(r1)
- *             rmatvec(&p, &n, &CONST_FLOAT_1, &r[0], &X1i[0,0], &CONST_INT_1, &CONST_FLOAT_0, &aux_p[0], &f, &CONST_FLOAT_1, &X2i[0,0], &CONST_FLOAT_0, &aux_q[0])             # <<<<<<<<<<<<<<
+ *             rmatvec(&p, &n, &CONST_DOUBLE_1, &r[0], &X1i[0,0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &f, &CONST_DOUBLE_1, &X2i[0,0], &CONST_DOUBLE_0, &aux_q[0])             # <<<<<<<<<<<<<<
  * 
  *             # if np.linalg.norm(Zi.rmatvec(r1)) > zetas[i]:
  */
@@ -19081,7 +19080,7 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_X2i, 0);
       __pyx_t_3 = 0;
       __pyx_t_2 = 0;
       __pyx_t_1 = 0;
-      __pyx_f_12kron_solvers_7solvers_rmatvec((&__pyx_v_p), (&__pyx_v_n), (&__pyx_v_CONST_FLOAT_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_16)) )))), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1i.data) + __pyx_t_15)) ) + __pyx_t_5 * __pyx_v_X1i.strides[1]) )))), (&__pyx_v_CONST_INT_1), (&__pyx_v_CONST_FLOAT_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_p.data) + __pyx_t_4)) )))), (&__pyx_v_f), (&__pyx_v_CONST_FLOAT_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2i.data) + __pyx_t_3)) ) + __pyx_t_2 * __pyx_v_X2i.strides[1]) )))), (&__pyx_v_CONST_FLOAT_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_q.data) + __pyx_t_1)) )))));
+      __pyx_f_12kron_solvers_7solvers_rmatvec((&__pyx_v_p), (&__pyx_v_n), (&__pyx_v_CONST_DOUBLE_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_16)) )))), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1i.data) + __pyx_t_15)) ) + __pyx_t_5 * __pyx_v_X1i.strides[1]) )))), (&__pyx_v_CONST_INT_1), (&__pyx_v_CONST_DOUBLE_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_p.data) + __pyx_t_4)) )))), (&__pyx_v_f), (&__pyx_v_CONST_DOUBLE_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2i.data) + __pyx_t_3)) ) + __pyx_t_2 * __pyx_v_X2i.strides[1]) )))), (&__pyx_v_CONST_DOUBLE_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_q.data) + __pyx_t_1)) )))));
 
       /* "kron_solvers/solvers.pyx":237
  * 
@@ -19241,7 +19240,7 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_int_dxi, 0);
         /* "kron_solvers/solvers.pyx":257
  * 
  *                 # r -= Zi.matvec(xi)
- *                 matvec(&p, &f, &CONST_FLOAT_1, &X2i[0,0], &xi[0], &CONST_INT_1, &CONST_FLOAT_0, &aux_p[0], &n, &CONST_FLOAT_m1, &X1i[0,0], &r[0])             # <<<<<<<<<<<<<<
+ *                 matvec(&p, &f, &CONST_DOUBLE_1, &X2i[0,0], &xi[0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &n, &CONST_DOUBLE_m1, &X1i[0,0], &r[0])             # <<<<<<<<<<<<<<
  * 
  *             else:
  */
@@ -19252,7 +19251,7 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_int_dxi, 0);
         __pyx_t_5 = 0;
         __pyx_t_15 = 0;
         __pyx_t_16 = 0;
-        __pyx_f_12kron_solvers_7solvers_matvec((&__pyx_v_p), (&__pyx_v_f), (&__pyx_v_CONST_FLOAT_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2i.data) + __pyx_t_1)) ) + __pyx_t_2 * __pyx_v_X2i.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_xi.data) + __pyx_t_3)) )))), (&__pyx_v_CONST_INT_1), (&__pyx_v_CONST_FLOAT_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_p.data) + __pyx_t_4)) )))), (&__pyx_v_n), (&__pyx_v_CONST_FLOAT_m1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1i.data) + __pyx_t_5)) ) + __pyx_t_15 * __pyx_v_X1i.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_16)) )))));
+        __pyx_f_12kron_solvers_7solvers_matvec((&__pyx_v_p), (&__pyx_v_f), (&__pyx_v_CONST_DOUBLE_1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X2i.data) + __pyx_t_1)) ) + __pyx_t_2 * __pyx_v_X2i.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_xi.data) + __pyx_t_3)) )))), (&__pyx_v_CONST_INT_1), (&__pyx_v_CONST_DOUBLE_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_aux_p.data) + __pyx_t_4)) )))), (&__pyx_v_n), (&__pyx_v_CONST_DOUBLE_m1), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_X1i.data) + __pyx_t_5)) ) + __pyx_t_15 * __pyx_v_X1i.strides[1]) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_r.data) + __pyx_t_16)) )))));
 
         /* "kron_solvers/solvers.pyx":237
  * 
@@ -19267,13 +19266,13 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_int_dxi, 0);
       /* "kron_solvers/solvers.pyx":261
  *             else:
  *                 # xi.fill(0)
- *                 dscal(&f, &CONST_FLOAT_0, &xi[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
+ *                 dscal(&f, &CONST_DOUBLE_0, &xi[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
  * 
  *         # dx[:] = x1
  */
       /*else*/ {
         __pyx_t_16 = 0;
-        __pyx_f_5scipy_6linalg_11cython_blas_dscal((&__pyx_v_f), (&__pyx_v_CONST_FLOAT_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_xi.data) + __pyx_t_16)) )))), (&__pyx_v_CONST_INT_1));
+        __pyx_f_5scipy_6linalg_11cython_blas_dscal((&__pyx_v_f), (&__pyx_v_CONST_DOUBLE_0), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_xi.data) + __pyx_t_16)) )))), (&__pyx_v_CONST_INT_1));
       }
       __pyx_L7:;
     }
@@ -19282,7 +19281,7 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_int_dxi, 0);
  *         # dx[:] = x1
  *         # dx -= x0
  *         dcopy(&qk, &x1[0], &CONST_INT_1, &dx[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
- *         daxpy(&qk, &CONST_FLOAT_m1, &x0[0], &CONST_INT_1, &dx[0], &CONST_INT_1)
+ *         daxpy(&qk, &CONST_DOUBLE_m1, &x0[0], &CONST_INT_1, &dx[0], &CONST_INT_1)
  *         # _amax = idamax(&N, &dr[0], &CONST_INT_1)-1 # BLAS is one-based index
  */
     __pyx_t_16 = 0;
@@ -19292,29 +19291,29 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_int_dxi, 0);
     /* "kron_solvers/solvers.pyx":266
  *         # dx -= x0
  *         dcopy(&qk, &x1[0], &CONST_INT_1, &dx[0], &CONST_INT_1)
- *         daxpy(&qk, &CONST_FLOAT_m1, &x0[0], &CONST_INT_1, &dx[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
+ *         daxpy(&qk, &CONST_DOUBLE_m1, &x0[0], &CONST_INT_1, &dx[0], &CONST_INT_1)             # <<<<<<<<<<<<<<
  *         # _amax = idamax(&N, &dr[0], &CONST_INT_1)-1 # BLAS is one-based index
  * 
  */
     __pyx_t_15 = 0;
     __pyx_t_16 = 0;
-    __pyx_f_5scipy_6linalg_11cython_blas_daxpy((&__pyx_v_qk), (&__pyx_v_CONST_FLOAT_m1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x0.data) + __pyx_t_15)) )))), (&__pyx_v_CONST_INT_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_dx.data) + __pyx_t_16)) )))), (&__pyx_v_CONST_INT_1));
+    __pyx_f_5scipy_6linalg_11cython_blas_daxpy((&__pyx_v_qk), (&__pyx_v_CONST_DOUBLE_m1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x0.data) + __pyx_t_15)) )))), (&__pyx_v_CONST_INT_1), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_dx.data) + __pyx_t_16)) )))), (&__pyx_v_CONST_INT_1));
 
     /* "kron_solvers/solvers.pyx":269
  *         # _amax = idamax(&N, &dr[0], &CONST_INT_1)-1 # BLAS is one-based index
  * 
- *         if dnrm2(&qk, &dx[0], &CONST_INT_1) < dnrm2(&qk, &x0[0], &CONST_INT_1) * ext_tol:             # <<<<<<<<<<<<<<
+ *         if dnrm2(&qk, &dx[0], &CONST_INT_1) <= dnrm2(&qk, &x0[0], &CONST_INT_1) * ext_tol:             # <<<<<<<<<<<<<<
  *             break
  * 
  */
     __pyx_t_16 = 0;
     __pyx_t_15 = 0;
-    __pyx_t_17 = (__pyx_f_5scipy_6linalg_11cython_blas_dnrm2((&__pyx_v_qk), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_dx.data) + __pyx_t_16)) )))), (&__pyx_v_CONST_INT_1)) < (__pyx_f_5scipy_6linalg_11cython_blas_dnrm2((&__pyx_v_qk), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x0.data) + __pyx_t_15)) )))), (&__pyx_v_CONST_INT_1)) * __pyx_v_ext_tol));
+    __pyx_t_17 = (__pyx_f_5scipy_6linalg_11cython_blas_dnrm2((&__pyx_v_qk), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_dx.data) + __pyx_t_16)) )))), (&__pyx_v_CONST_INT_1)) <= (__pyx_f_5scipy_6linalg_11cython_blas_dnrm2((&__pyx_v_qk), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_x0.data) + __pyx_t_15)) )))), (&__pyx_v_CONST_INT_1)) * __pyx_v_ext_tol));
     if (__pyx_t_17) {
 
       /* "kron_solvers/solvers.pyx":270
  * 
- *         if dnrm2(&qk, &dx[0], &CONST_INT_1) < dnrm2(&qk, &x0[0], &CONST_INT_1) * ext_tol:
+ *         if dnrm2(&qk, &dx[0], &CONST_INT_1) <= dnrm2(&qk, &x0[0], &CONST_INT_1) * ext_tol:
  *             break             # <<<<<<<<<<<<<<
  * 
  *         # if fabs(dr[_amax]) < ext_tol:
@@ -19324,7 +19323,7 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_int_dxi, 0);
       /* "kron_solvers/solvers.pyx":269
  *         # _amax = idamax(&N, &dr[0], &CONST_INT_1)-1 # BLAS is one-based index
  * 
- *         if dnrm2(&qk, &dx[0], &CONST_INT_1) < dnrm2(&qk, &x0[0], &CONST_INT_1) * ext_tol:             # <<<<<<<<<<<<<<
+ *         if dnrm2(&qk, &dx[0], &CONST_INT_1) <= dnrm2(&qk, &x0[0], &CONST_INT_1) * ext_tol:             # <<<<<<<<<<<<<<
  *             break
  * 
  */
@@ -21480,7 +21479,6 @@ static int __Pyx_modinit_function_import_code(void) {
   if (__Pyx_ImportFunction_3_0_6(__pyx_t_1, "dger", (void (**)(void))&__pyx_f_5scipy_6linalg_11cython_blas_dger, "void (int *, int *, __pyx_t_5scipy_6linalg_11cython_blas_d *, __pyx_t_5scipy_6linalg_11cython_blas_d *, int *, __pyx_t_5scipy_6linalg_11cython_blas_d *, int *, __pyx_t_5scipy_6linalg_11cython_blas_d *, int *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ImportFunction_3_0_6(__pyx_t_1, "dnrm2", (void (**)(void))&__pyx_f_5scipy_6linalg_11cython_blas_dnrm2, "__pyx_t_5scipy_6linalg_11cython_blas_d (int *, __pyx_t_5scipy_6linalg_11cython_blas_d *, int *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ImportFunction_3_0_6(__pyx_t_1, "dscal", (void (**)(void))&__pyx_f_5scipy_6linalg_11cython_blas_dscal, "void (int *, __pyx_t_5scipy_6linalg_11cython_blas_d *, __pyx_t_5scipy_6linalg_11cython_blas_d *, int *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ImportFunction_3_0_6(__pyx_t_1, "idamax", (void (**)(void))&__pyx_f_5scipy_6linalg_11cython_blas_idamax, "int (int *, __pyx_t_5scipy_6linalg_11cython_blas_d *, int *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;
