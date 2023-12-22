@@ -1,9 +1,15 @@
+from typing import TypedDict
 import numpy as np 
 import scipy as sp 
 from .solvers import apg, bcd
 from kron_groupper import Groupper
 from regularization_tools import AbstractRegularizer 
 
+class Stopping(TypedDict):
+    max_iter : int
+    rtol : float 
+    atol : float 
+    
 class KronArray(sp.sparse.linalg.LinearOperator):
 
     def __init__(self, B: np.ndarray, A: np.ndarray) -> None:
@@ -65,11 +71,12 @@ class KGEN(AbstractRegularizer):
         self.Z = Z
         self.gr = gr
         self.etas = np.sqrt(gr.get_group_sizes())
+        self.etas /= np.sum(self.etas)
         
     def norms(self, ord: str | int ='fro') -> float:
         for _, (a, b) in self.gr.it():
             Zi = self.Z.sub(a, b)
-            yield Zi.norm(ord)
+            yield Zi.norm(ord=ord)
 
     def xnorms(self, x: np.ndarray, ord: str | int ='fro') -> float:
         for _, (a, b) in self.gr.it():
@@ -78,13 +85,14 @@ class KGEN(AbstractRegularizer):
 
     def lipschitz(self, zeta: float) -> float: 
         for norm in self.norms(ord=2):
-            yield norm ** 2 + zeta
+            yield norm**2 + zeta
     
     def lambda_max(self, y: np.ndarray, alpha: float):
-        N = y.size
+        # N = y.size
         dcs = np.fromiter(self.discard_conds(y), dtype=np.float64)
         w = np.max(dcs/self.etas)
-        return w/(N*alpha)
+        return w/alpha
+        # return w/(N*alpha)
     
     def discard_conds(self, y: np.ndarray):
         
@@ -107,15 +115,14 @@ class KGEN(AbstractRegularizer):
     
     def residual(self, X: np.ndarray, y: np.ndarray):
         n_lambdas = X.shape[0]
-        N = y.size
         R = np.empty(n_lambdas)
         for i in range(n_lambdas):
             x = X[i].reshape(-1, order='F')
-            R[i] = np.linalg.norm(self.Z.matvec(x) - y, ord=2)**2/(2*N)
+            R[i] = np.linalg.norm(self.Z.matvec(x) - y, ord=2) # **2/2
         return R
     
-    def lambdaspace(self, l_max: float, epsilon: float = 1e-3, num: int = 100):
-        return super().lambdaspace(start=l_max, end=l_max*epsilon, num=num)
+    # def lambdaspace(self, l_max: float, epsilon: float = 1e-3, num: int = 100):
+    #     return super().lambdaspace(start=l_max, end=l_max*epsilon, num=num)
     
     def sols(self, X: np.ndarray):
         return np.tensordot(X, self.Z.B, axes=(2, 1))
@@ -124,28 +131,26 @@ class KGEN(AbstractRegularizer):
             self, 
             y: np.ndarray, 
             lambdas: np.ndarray, 
-            alpha: float=1., 
-            int_max_iter=1e4, 
-            int_tol=1e-3,
-            ext_max_iter=1e4, 
-            ext_tol=1e-3, 
+            alpha: float=1.,
+            int_stop: Stopping = {'max_iter': 1e4, 'rtol': 1e-3, 'atol': 1e-8},
+            ext_stop: Stopping = {'max_iter': 1e4, 'rtol': 1e-3, 'atol': 1e-8},
         ):
 
         if lambdas[0] < lambdas[-1]:
             raise ValueError('Lambdas must be in decreasing order.')
         
-        n_groups, N = self.gr.get_n_groups(), y.size
-        norm_groups = np.fromiter(self.norms(ord=2), dtype=np.float64)
-
+        n_groups = self.gr.get_n_groups()
         X = np.zeros((lambdas.size, self.Z.q, self.Z.k), order='F')
         x0 = np.zeros((self.Z.shape[1]), order='F')
-        zetas = np.empty(n_groups)
-        int_ts = np.empty(n_groups)
+        zetas = np.empty(n_groups, order='F')
+        L0s = np.fromiter(self.lipschitz(0), dtype=np.float64)
+        ts = np.empty(n_groups, order='F')
 
         for i, lambd in enumerate(lambdas):
-            zeta = (1.-alpha)*lambd*N
-            zetas[:] = self.etas*alpha*lambd*N
-            int_ts[:] = 1./(norm_groups**2 + zeta)
+            zeta = (1.-alpha)*lambd
+            zetas[:] = self.etas*alpha*lambd
+            ts[:] = 1./(L0s + zeta)
+
             n = kbcd(
                 self.Z,
                 y,
@@ -153,13 +158,11 @@ class KGEN(AbstractRegularizer):
                 self.gr.ixs,
                 zeta,
                 zetas,
-                int_ts,
-                ext_max_iter,
-                ext_tol,
-                int_max_iter,
-                int_tol
+                ts,
+                int_stop,
+                ext_stop,
             )
-            print(f'lambda = {i}\titers {n}/{ext_max_iter:.0f}')
+            print(f"lambda = {i}\titers {n}/{ext_stop['max_iter']:.0f}")
             X[i, ...] = x0.reshape((self.Z.q, self.Z.k), order='F')
         return X
 
@@ -171,12 +174,10 @@ def kbcd(
         zeta: float,
         zetas: np.ndarray,
         int_ts: np.ndarray,
-        ext_max_iter: int = 1e4,
-        ext_tol: float = 1e-3,
-        int_max_iter: int = 1e4,
-        int_tol: float = 1e-3,
+        int_stop: Stopping = {'max_iter': 1e4, 'rtol': 1e-3, 'atol': 1e-8},
+        ext_stop: Stopping = {'max_iter': 1e4, 'rtol': 1e-3, 'atol': 1e-8},
     ):
-    """Optimize (1/2)*||Zx-y||_2^2 + (zeta/2)*||x||_2^2 + ||x||_w21 being ||x||_w21 the  l21 norm weighting by zetas
+    """Optimize (1/2)*||Zx-y||_2^2 + (zeta/2)*||x||_2^2 + ||x||_w21 being ||x||_w21 the  l21 norm weighting by zetas.
     solution is returned on x0"""
 
     N, qk = Z.shape
@@ -196,7 +197,7 @@ def kbcd(
     int_dx = np.empty(Z.q, order='F', dtype=np.float64)
     int_aux_p = np.empty(Z.p, order='F', dtype=np.float64)
 
-    return bcd(Z.A, Z.B, y, x0, ix, zeta, zetas, int_ts, ext_max_iter, ext_tol, int_max_iter, int_tol, r, x1, dx, aux_pk, aux_p, aux_q, int_y0, int_r, int_grad_f, int_x1, int_dx, int_aux_p)
+    return bcd(Z.A, Z.B, y, x0, ix, zeta, zetas, int_ts, int_stop['max_iter'], int_stop['rtol'], int_stop['atol'], ext_stop['max_iter'], ext_stop['rtol'], ext_stop['atol'], r, x1, dx, aux_pk, aux_p, aux_q, int_y0, int_r, int_grad_f, int_x1, int_dx, int_aux_p)
 
 def _kbcd(
         Z: KronArray,
@@ -206,13 +207,10 @@ def _kbcd(
         zeta: float,
         zetas: np.ndarray,
         int_ts: np.ndarray,
-        ext_max_iter: int = 1e4,
-        ext_tol: float = 1e-3,
-        int_max_iter: int = 1e4,
-        int_tol: float = 1e-3,
+        int_stop: Stopping = {'max_iter': 1e4, 'rtol': 1e-3, 'atol': 1e-8},
+        ext_stop: Stopping = {'max_iter': 1e4, 'rtol': 1e-3, 'atol': 1e-8},
     ):
-    """Optimize (1/2)*||Zx-y||_2^2 + (zeta/2)*||x||_2^2 + ||x||_w21 being ||x||_w21 the  l21 norm weighting by zetas
-    solution is returned on x0"""
+    """Optimize (1/2)*||Zx-y||_2^2 + (zeta/2)*||x||_2^2 + ||x||_w21 being ||x||_w21 the  l21 norm weighting by zetas solution is returned on x0"""
 
     if not x0.flags.f_contiguous:
         raise ValueError('X0 should be a Fortran array.')
@@ -220,13 +218,11 @@ def _kbcd(
     if not y.flags.f_contiguous:
         raise ValueError('y should be a Fortran array.')
 
-    ext_max_iter = int(ext_max_iter + 1)
+    ext_max_iter = int(ext_stop['max_iter'] + 1)
     n_groups = ixs.shape[0] - 1
     r = y.copy(order='F')
     r -= Z.matvec(x0) # init total residual
 
-    # dr = np.empty_like(r0, order='F')
-    # r1 = r0.copy(order='F')
     dx = np.empty_like(x0, order='F')
     x1 = x0.copy(order='F')
 
@@ -241,8 +237,6 @@ def _kbcd(
             
             if np.linalg.norm(Zi.rmatvec(r)) > zetas[i]:
 
-                # print(f"{np.linalg.norm(Z._asub(a, b)):.6f}\t{np.linalg.norm(Z._bsub(a)):.6f}\t{np.linalg.norm(r1):.6f}\t{np.linalg.norm(x):.6f}\t{int_ts[i]:.6f}\t{zeta:.6f}\t{zetas[i]:.6f}\t{int_max_iter:.0f}\t{int_tol:.6f}")
-
                 _ = _kapg(
                     Zi,
                     r,
@@ -250,8 +244,7 @@ def _kbcd(
                     t=int_ts[i],
                     alpha=zeta,
                     beta=zetas[i],
-                    max_iter=int_max_iter,
-                    tol=int_tol
+                    stop=int_stop
                 )
                 r -= Zi.matvec(xi) # total residual
             else:
@@ -260,7 +253,7 @@ def _kbcd(
         # stopping criteria
         dx[:] = x1
         dx -= x0
-        if np.linalg.norm(dx) <= np.linalg.norm(x0) * ext_tol:
+        if np.linalg.norm(dx) <= np.linalg.norm(x0)*ext_stop['rtol'] + ext_stop['atol']:
             break
 
         # updates
@@ -278,8 +271,7 @@ def kapg(
         t: float,
         alpha: float,
         beta: float,
-        max_iter: int = 1e4,
-        tol: float = 1e-3
+        stop: Stopping = {'max_iter': 1e4, 'rtol': 1e-3, 'atol': 1e-8},
     ):
     
     """Accelerated proximal gradient method for optimize the function: (1/2)*||Ax-b||_2^2 + (alpha/2)*||x||_2^2 + beta*||x||_2
@@ -292,7 +284,7 @@ def kapg(
     x1 = np.empty_like(x0, order='F')
     dx = np.empty_like(x0, order='F')
     aux_p = np.empty(Z.p, order='F')
-    return apg(Z.A, Z.B, b, x0, t, alpha, beta, max_iter, tol, y0, r, grad_f, x1, dx, aux_p)
+    return apg(Z.A, Z.B, b, x0, t, alpha, beta, stop['max_iter'], stop['rtol'], stop['atol'], y0, r, grad_f, x1, dx, aux_p)
 
 def _kapg(
         Z: KronArray,
@@ -301,16 +293,11 @@ def _kapg(
         t: float,
         alpha: float,
         beta: float,
-        max_iter: int = 1e4,
-        tol: float = 1e-3
+        stop: Stopping = {'max_iter': 1e4, 'rtol': 1e-3, 'atol': 1e-8},
     ):
-    
-    """Accelerated proximal gradient method for optimize the function: (1/2)*||Ax-b||_2^2 + (alpha/2)*||x||_2^2 + beta*||x||_2
-    solution is returned on x0
-    t is convergence rate
+    """Accelerated proximal gradient method for optimize the function: (1/2)*||Ax-b||_2^2 + (alpha/2)*||x||_2^2 + beta*||x||_2 solution is returned on x0. t is convergence rate
     """
-
-    max_iter = int(max_iter + 1)
+    max_iter = int(stop['max_iter'] + 1)
     y0 = x0.copy(order='F')
 
     r = b.copy(order='F')
@@ -340,20 +327,18 @@ def _kapg(
         # stopping criteria
         dx[:] = x1
         dx -= x0
-        if np.linalg.norm(dx) < np.linalg.norm(x0)*tol:
+        if np.linalg.norm(dx) <= np.linalg.norm(x0)*stop['rtol'] + stop['atol']:
             break
-        # print(f'{np.linalg.norm(dx):.6f}')
 
         # nesterov's acceleration
         y1[:]= dx
         y1 *= k/(k+3.) 
         y1 += x1
 
-        # print(np.linalg.norm(dx)/np.linalg.norm(x0))
         # updates
         x0[:] = x1
         y0[:] = y1
-        r -= Z.matvec(dx) 
+        r -= Z.matvec(dx)
 
 
     else:

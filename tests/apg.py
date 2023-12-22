@@ -1,4 +1,4 @@
-from src.kron_solvers.core import KronArray, _kapg, kapg
+from src.kron_solvers.core import KronArray, _kapg, kapg, Stopping
 import numpy as np
 import timeit
 
@@ -15,21 +15,20 @@ b = np.asfortranarray(rng.random(Z.shape[0]))
 x0 = np.zeros(Z.shape[1], order='F')
 
 alpha, beta = .5, .5
-max_iter = 1e4
+stop = Stopping(max_iter=1e4, rtol=1e-3, atol=1e-12)
 L = Z.norm(ord=2)**2 + alpha
 t = 2./L
-tol = 1e-3
 
 
 start = timeit.default_timer()
-n = _kapg(Z, b, x0, t, alpha, beta, max_iter, tol)
+n = _kapg(Z, b, x0, t, alpha, beta, stop=stop)
 np_secs = timeit.default_timer() - start
 
 _x0 = x0.copy()
 x0.fill(0.)
 
 start = timeit.default_timer()
-n = kapg(Z, b, x0, t, alpha, beta, max_iter, tol)
+n = kapg(Z, b, x0, t, alpha, beta, stop=stop)
 cy_secs = timeit.default_timer() - start
 
 print(f"Cython is x{np_secs/cy_secs:.1f} faster than NumPy")

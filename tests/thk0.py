@@ -1,4 +1,4 @@
-from src.kron_solvers.core import KronArray, KGEN
+from src.kron_solvers.core import KronArray, KGEN, Stopping
 import numpy as np
 import timeit
 from kron_groupper import Groupper
@@ -24,10 +24,8 @@ tkh_secs = timeit.default_timer() - start
 
 solver_params = dict(
     alpha = 0.,
-    int_max_iter = 1e6,
-    int_tol = 1e-8,
-    ext_max_iter = 1e6,
-    ext_tol = 1e-8
+    int_stop = Stopping(max_iter=1e6, rtol=1e-8, atol=1e-12),
+    ext_stop = Stopping(max_iter=1e6, rtol=1e-8, atol=1e-12)
 )
 
 gr = Groupper.from_constant(1, (q, k))
@@ -36,11 +34,11 @@ xbcd = np.empty_like(xtkh)
 N = y.size 
 
 start = timeit.default_timer()
-xbcd = ki.solve(y, (lambdas**2/N), **solver_params).reshape((n_lambdas, Z.q*Z.k, 1), order='F')
+xbcd = ki.solve(y, (lambdas**2), **solver_params).reshape((n_lambdas, Z.q*Z.k, 1), order='F')
 bcd_secs = timeit.default_timer() - start
 print(f"Thk0 is x{bcd_secs/tkh_secs:.1f} faster than Cython")
 
-assert np.allclose(xtkh, xbcd, rtol=1e-3)
+assert np.allclose(xtkh, xbcd, rtol=1e-3, atol=1e-12)
 print('OK')
 
 

@@ -58,7 +58,8 @@ cpdef int apg(
         double alpha,
         double beta,
         int max_iter,
-        double tol,
+        double rtol,
+        double atol,
         double[::1] y0, # reserved memory 
         double[::1] r, # reserved memory 
         double[::1] grad_f, # reserved memory
@@ -121,7 +122,7 @@ cpdef int apg(
         daxpy(&q, &CONST_DOUBLE_m1, &x0[0], &CONST_INT_1, &dx[0], &CONST_INT_1)
         # if np.linalg.norm(dx)/t < tol: # norm of generalized gradient
             # break
-        if dnrm2(&q, &dx[0], &CONST_INT_1) <= dnrm2(&q, &x0[0], &CONST_INT_1) * tol:
+        if dnrm2(&q, &dx[0], &CONST_INT_1) <= dnrm2(&q, &x0[0], &CONST_INT_1)*rtol + atol:
             break
         # printf('%f\n', dnrm2(&q, &dx[0], &CONST_INT_1))
 
@@ -157,10 +158,12 @@ cpdef int bcd(
         double zeta,
         double[::1] zetas,
         double[::1] int_ts,
-        int ext_max_iter,
-        double ext_tol,
         int int_max_iter,
-        double int_tol,
+        double int_rtol,
+        double int_atol,
+        int ext_max_iter,
+        double ext_rtol,
+        double ext_atol,
         double[::1] r, # reserved memory
         double[::1] x1, # reserved memory
         double[::1] dx, # reserved memory
@@ -251,7 +254,7 @@ cpdef int bcd(
                 # printf("%d\t", int_max_iter)
                 # printf("%f\n", int_tol)
 
-                apg(X2i, X1i, r, xi, int_ts[i], zeta, zetas[i], int_max_iter, int_tol, int_y0i, int_r, int_grad_fi, int_x1i, int_dxi, int_aux_p)
+                apg(X2i, X1i, r, xi, int_ts[i], zeta, zetas[i], int_max_iter, int_rtol, int_atol, int_y0i, int_r, int_grad_fi, int_x1i, int_dxi, int_aux_p)
                 
                 # r -= Zi.matvec(xi)
                 matvec(&p, &f, &CONST_DOUBLE_1, &X2i[0,0], &xi[0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &n, &CONST_DOUBLE_m1, &X1i[0,0], &r[0])
@@ -266,7 +269,7 @@ cpdef int bcd(
         daxpy(&qk, &CONST_DOUBLE_m1, &x0[0], &CONST_INT_1, &dx[0], &CONST_INT_1)
         # _amax = idamax(&N, &dr[0], &CONST_INT_1)-1 # BLAS is one-based index
 
-        if dnrm2(&qk, &dx[0], &CONST_INT_1) <= dnrm2(&qk, &x0[0], &CONST_INT_1) * ext_tol:
+        if dnrm2(&qk, &dx[0], &CONST_INT_1) <= dnrm2(&qk, &x0[0], &CONST_INT_1) * ext_rtol + ext_atol:
             break
 
         # if fabs(dr[_amax]) < ext_tol:
