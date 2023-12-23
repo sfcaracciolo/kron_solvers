@@ -251,8 +251,7 @@ def _kbcd(
                 xi.fill(0)
 
         # stopping criteria
-        dx[:] = x1
-        dx -= x0
+        dx[:] = x1 - x0
         if np.linalg.norm(dx) <= np.linalg.norm(x0)*ext_stop['rtol'] + ext_stop['atol']:
             break
 
@@ -298,7 +297,7 @@ def _kapg(
     """Accelerated proximal gradient method for optimize the function: (1/2)*||Ax-b||_2^2 + (alpha/2)*||x||_2^2 + beta*||x||_2 solution is returned on x0. t is convergence rate
     """
     max_iter = int(stop['max_iter'] + 1)
-    y0 = x0.copy(order='F')
+    y1 = x0.copy(order='F')
 
     r = b.copy(order='F')
     r -= Z.matvec(x0)
@@ -306,39 +305,22 @@ def _kapg(
     grad_f = np.empty_like(x0, order='F')
     x1 = np.empty_like(x0, order='F')
     dx = np.empty_like(x0, order='F')
-    y1 = v = grad_f # views
+    grad_f = np.empty_like(x0, order='F')
+    v = np.empty_like(x0, order='F')
 
     for k in range(1, max_iter):
         
-        # gradient of f
-        grad_f[:] = y0
-        grad_f *= alpha
-        grad_f -= Z.rmatvec(r)
-
-        # gradient step (view of grad_f)
-        v *= -t
-        v += y0
-
-        # proximal of ||x||_2 (view of v)
-        s = np.maximum(0, 1.-t*beta/np.linalg.norm(v))
-        x1[:] = v 
-        x1 *= s
-
-        # stopping criteria
-        dx[:] = x1
-        dx -= x0
+        grad_f[:] = - Z.rmatvec(r) + alpha * y1
+        v[:] = y1 - t * grad_f
+        x1[:] = np.maximum(0, 1.-t*beta/np.linalg.norm(v)) * v 
+        dx[:] = x1 - x0
         if np.linalg.norm(dx) <= np.linalg.norm(x0)*stop['rtol'] + stop['atol']:
             break
 
-        # nesterov's acceleration
-        y1[:]= dx
-        y1 *= k/(k+3.) 
-        y1 += x1
-
         # updates
-        x0[:] = x1
-        y0[:] = y1
         r -= Z.matvec(dx)
+        y1[:]= x1 + k/(k+3.) * dx # nesterov's acceleration
+        x0[:] = x1
 
 
     else:
