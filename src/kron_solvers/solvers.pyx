@@ -1,4 +1,4 @@
-# cython: profile=False, cdivision=True, boundscheck=False, wraparound = False, language_level=3str
+# cython: profile=False, cdivision=True, boundscheck=False, wraparound=False, nonecheck=False, language_level=3str
 
 from libc.stdio cimport printf
 from libc.math cimport fabs
@@ -60,7 +60,7 @@ cpdef int apg(
         int max_iter,
         double rtol,
         double atol,
-        double[::1] y0, # reserved memory 
+        double[::1] y1, # reserved memory 
         double[::1] r, # reserved memory 
         double[::1] grad_f, # reserved memory
         double[::1] x1, # reserved memory
@@ -83,36 +83,33 @@ cpdef int apg(
     cdef double neg_t = -t
     cdef double s
     cdef double h
-
-    # Arrays allocations in bcd
-    cdef double* v = &grad_f[0]
-    cdef double* y1 = v
+    cdef double[::1] v = grad_f
     
-    dcopy(&q, &x0[0], &CONST_INT_1, &y0[0], &CONST_INT_1) # y0[:] = x0 
-
+    dcopy(&q, &x0[0], &CONST_INT_1, &y1[0], &CONST_INT_1) # y1[:] = x0 
     dcopy(&N, &b[0], &CONST_INT_1, &r[0], &CONST_INT_1) # r[:] = b
     matvec(&p, &q, &CONST_DOUBLE_1, &X2[0,0], &x0[0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &n, &CONST_DOUBLE_m1, &X1[0,0], &r[0]) # r -= A.matvec(x0)
 
     for k in range(1, max_iter_1):
+
         # gradient of f
-        # grad_f[:] = y0
+        # grad_f[:] = y1
         # grad_f *= alpha
         # grad_f -= A.rmatvec(r)
-        dcopy(&q, &y0[0], &CONST_INT_1, &grad_f[0], &CONST_INT_1) 
+        dcopy(&q, &y1[0], &CONST_INT_1, &grad_f[0], &CONST_INT_1) 
         rmatvec(&p, &n, &CONST_DOUBLE_1, &r[0], &X1[0,0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &q, &CONST_DOUBLE_m1, &X2[0,0], &alpha, &grad_f[0])
 
         # gradient step (view of grad_f)
         # v *= -t
-        # v += y0
-        dscal(&q, &neg_t, v, &CONST_INT_1)
-        daxpy(&q, &CONST_DOUBLE_1, &y0[0], &CONST_INT_1, v, &CONST_INT_1)
+        # v += y1
+        dscal(&q, &neg_t, &v[0], &CONST_INT_1)
+        daxpy(&q, &CONST_DOUBLE_1, &y1[0], &CONST_INT_1, &v[0], &CONST_INT_1)
 
         # proximal of ||x||_2 (view of v)
         # s = np.maximum(0, 1.-t*beta/np.linalg.norm(v))
         # x1[:] = v 
         # x1 *= s
-        s = fmax(CONST_DOUBLE_0, CONST_DOUBLE_1 + (neg_t * beta) / dnrm2(&q, v, &CONST_INT_1))
-        dcopy(&q, v, &CONST_INT_1, &x1[0], &CONST_INT_1) 
+        s = fmax(CONST_DOUBLE_0, CONST_DOUBLE_1 + (neg_t * beta) / dnrm2(&q, &v[0], &CONST_INT_1))
+        dcopy(&q, &v[0], &CONST_INT_1, &x1[0], &CONST_INT_1) 
         dscal(&q, &s, &x1[0], &CONST_INT_1)
 
         # stopping criteria
@@ -124,25 +121,20 @@ cpdef int apg(
             # break
         if dnrm2(&q, &dx[0], &CONST_INT_1) <= dnrm2(&q, &x0[0], &CONST_INT_1)*rtol + atol:
             break
-        # printf('%f\n', dnrm2(&q, &dx[0], &CONST_INT_1))
 
-
+        # updates
+        # r -= A.matvec(dx) 
+        matvec(&p, &q, &CONST_DOUBLE_1, &X2[0,0], &dx[0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &n, &CONST_DOUBLE_m1, &X1[0,0], &r[0])
         # nesterov's acceleration
         # y1[:]= dx
         # y1 *= k/(k+3.) 
         # y1 += x1
         h = k / (k + CONST_DOUBLE_3)
-        dcopy(&q, &dx[0], &CONST_INT_1, y1, &CONST_INT_1) 
-        dscal(&q, &h, y1, &CONST_INT_1)
-        daxpy(&q, &CONST_DOUBLE_1, &x1[0], &CONST_INT_1, y1, &CONST_INT_1)
-
-        # updates
+        dcopy(&q, &dx[0], &CONST_INT_1, &y1[0], &CONST_INT_1) 
+        dscal(&q, &h, &y1[0], &CONST_INT_1)
+        daxpy(&q, &CONST_DOUBLE_1, &x1[0], &CONST_INT_1, &y1[0], &CONST_INT_1)
         # x0[:] = x1
-        # y0[:] = y1
-        # r -= A.matvec(dx) 
         dcopy(&q, &x1[0], &CONST_INT_1, &x0[0], &CONST_INT_1) 
-        dcopy(&q, y1, &CONST_INT_1, &y0[0], &CONST_INT_1) 
-        matvec(&p, &q, &CONST_DOUBLE_1, &X2[0,0], &dx[0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &n, &CONST_DOUBLE_m1, &X1[0,0], &r[0])
 
     else:
         printf('APG: Max iter reached.\n')
@@ -170,7 +162,7 @@ cpdef int bcd(
         double[::1,:] aux_pk, # reserved memory
         double[::1] aux_p, # reserved memory
         double[::1] aux_q, # reserved memory 
-        double[::1] int_y0, # apg reserved memory 
+        double[::1] int_y1, # apg reserved memory 
         double[::1] int_r, # apg reserved memory 
         double[::1] int_grad_f, # apg reserved memory
         double[::1] int_x1, # apg reserved memory
@@ -199,7 +191,7 @@ cpdef int bcd(
     cdef double[::1, :] X2i,
     cdef double[::1, :] X1i,
     cdef double[::1] xi,
-    cdef double[::1] int_y0i,
+    cdef double[::1] int_y1i,
     cdef double[::1] int_grad_fi,
     cdef double[::1] int_x1i,
     cdef double[::1] int_dxi
@@ -238,7 +230,7 @@ cpdef int bcd(
 
             # if np.linalg.norm(Zi.rmatvec(r1)) > zetas[i]:
             if dnrm2(&f, &aux_q[0], &CONST_INT_1) > zetas[i]:
-                int_y0i = int_y0[:f]
+                int_y1i = int_y1[:f]
                 int_grad_fi = int_grad_f[:f]
                 int_x1i = int_x1[:f]
                 int_dxi = int_dx[:f]
@@ -254,7 +246,7 @@ cpdef int bcd(
                 # printf("%d\t", int_max_iter)
                 # printf("%f\n", int_tol)
 
-                apg(X2i, X1i, r, xi, int_ts[i], zeta, zetas[i], int_max_iter, int_rtol, int_atol, int_y0i, int_r, int_grad_fi, int_x1i, int_dxi, int_aux_p)
+                apg(X2i, X1i, r, xi, int_ts[i], zeta, zetas[i], int_max_iter, int_rtol, int_atol, int_y1i, int_r, int_grad_fi, int_x1i, int_dxi, int_aux_p)
                 
                 # r -= Zi.matvec(xi)
                 matvec(&p, &f, &CONST_DOUBLE_1, &X2i[0,0], &xi[0], &CONST_INT_1, &CONST_DOUBLE_0, &aux_p[0], &n, &CONST_DOUBLE_m1, &X1i[0,0], &r[0])

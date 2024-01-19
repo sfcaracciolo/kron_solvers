@@ -31,6 +31,9 @@ class KronArray(sp.sparse.linalg.LinearOperator):
 
         super().__init__(shape=(self.p*self.n ,self.q*self.k), dtype=np.float64)
     
+    def size(self):
+        return self.shape[0] * self.shape[1]
+    
     def _matvec(self, v: np.ndarray) -> np.ndarray:
         V = np.reshape(v, (self.q, self.k), order='F')
         return np.linalg.multi_dot([self.A, V, self.B.T]).reshape(-1, order='F')
@@ -118,7 +121,7 @@ class KGEN(AbstractRegularizer):
         R = np.empty(n_lambdas)
         for i in range(n_lambdas):
             x = X[i].reshape(-1, order='F')
-            R[i] = np.linalg.norm(self.Z.matvec(x) - y, ord=2) # **2/2
+            R[i] = .5*np.linalg.norm(self.Z.matvec(x) - y, ord=2)
         return R
     
     # def lambdaspace(self, l_max: float, epsilon: float = 1e-3, num: int = 100):
@@ -139,6 +142,7 @@ class KGEN(AbstractRegularizer):
         if lambdas[0] < lambdas[-1]:
             raise ValueError('Lambdas must be in decreasing order.')
         
+        print(f'shapes: D = {self.Z.B.shape[0]} x {self.Z.B.shape[1]}, A = {self.Z.A.shape[0]} x {self.Z.A.shape[1]}, dimension problem = {self.Z.size():.1e}')
         n_groups = self.gr.get_n_groups()
         X = np.zeros((lambdas.size, self.Z.q, self.Z.k), order='F')
         x0 = np.zeros((self.Z.shape[1]), order='F')
@@ -162,7 +166,7 @@ class KGEN(AbstractRegularizer):
                 int_stop,
                 ext_stop,
             )
-            print(f"lambda = {i}\titers {n}/{ext_stop['max_iter']:.0f}")
+            print(f"lambda: {i+1}/{lambdas.size}\t{lambd:.2e}\titers {n}/{ext_stop['max_iter']:.0f}")
             X[i, ...] = x0.reshape((self.Z.q, self.Z.k), order='F')
         return X
 
@@ -263,6 +267,7 @@ def _kbcd(
     
     return j
 
+# @profile
 def kapg(
         Z: KronArray,
         b: np.ndarray,
@@ -277,14 +282,15 @@ def kapg(
     solution is returned on x0
     t is convergence rate
     """
-    y0 = np.empty_like(x0, order='F')
+    y1 = np.empty_like(x0, order='F')
     r = np.empty_like(b, order='F')
     grad_f = np.empty_like(x0, order='F')
     x1 = np.empty_like(x0, order='F')
     dx = np.empty_like(x0, order='F')
     aux_p = np.empty(Z.p, order='F')
-    return apg(Z.A, Z.B, b, x0, t, alpha, beta, stop['max_iter'], stop['rtol'], stop['atol'], y0, r, grad_f, x1, dx, aux_p)
+    return apg(Z.A, Z.B, b, x0, t, alpha, beta, stop['max_iter'], stop['rtol'], stop['atol'], y1, r, grad_f, x1, dx, aux_p)
 
+# @profile
 def _kapg(
         Z: KronArray,
         b: np.ndarray,
@@ -298,30 +304,25 @@ def _kapg(
     """
     max_iter = int(stop['max_iter'] + 1)
     y1 = x0.copy(order='F')
-
     r = b.copy(order='F')
     r -= Z.matvec(x0)
-
     grad_f = np.empty_like(x0, order='F')
     x1 = np.empty_like(x0, order='F')
     dx = np.empty_like(x0, order='F')
-    grad_f = np.empty_like(x0, order='F')
-    v = np.empty_like(x0, order='F')
+    v = grad_f
 
     for k in range(1, max_iter):
         
-        grad_f[:] = - Z.rmatvec(r) + alpha * y1
+        grad_f[:] = - Z.rmatvec(r) + alpha*y1
         v[:] = y1 - t * grad_f
         x1[:] = np.maximum(0, 1.-t*beta/np.linalg.norm(v)) * v 
         dx[:] = x1 - x0
         if np.linalg.norm(dx) <= np.linalg.norm(x0)*stop['rtol'] + stop['atol']:
             break
-
         # updates
         r -= Z.matvec(dx)
         y1[:]= x1 + k/(k+3.) * dx # nesterov's acceleration
         x0[:] = x1
-
 
     else:
         print('PGM: Max iter reached.')
