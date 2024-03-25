@@ -9,3 +9,9 @@ build/
 *.pyd 
 *.html
 *.egg-info
+bin
+etc
+licensing
+Library/
+opt/
+src/kron_solvers/solvers.c
